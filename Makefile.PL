@@ -57,6 +57,7 @@ requires 'Catalyst::Plugin::Unicode::Encoding';
 requires 'Catalyst::Action::RenderView';
 requires 'Catalyst::Component::InstancePerContext';
 requires 'Catalyst::View::TT';
+requires 'Catalyst::Action::Serialize';
 
 requires 'Template';
 requires 'Template::Provider::Encoding';
@@ -70,6 +71,8 @@ requires 'MooseX::Declare' => '0.32';
 requires 'MooseX::Types::Common';
 requires 'MooseX::Types::Path::Class';
 requires 'MooseX::Types';
+requires 'MooseX::Storage';
+requires 'JSON::Any';
 requires 'namespace::autoclean';
 
 requires 'Git::PurePerl' => '0.43';
@@ -93,6 +96,7 @@ requires 'XML::OPML::SimpleGen';
 
 test_requires 'Test::More' => '0.88';
 test_requires 'Test::utf8' => '0.02';
+test_requires 'HTTP::Request::Common';
 
 resources bugtracker => 'http://rt.cpan.org/Public/Dist/Display.html?Name=Gitalist';
 resources repository => 'git://git.shadowcat.co.uk/catagits/Gitalist.git';
