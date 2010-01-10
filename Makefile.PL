@@ -57,6 +57,7 @@ requires 'Catalyst::Plugin::Unicode::Encoding';
 requires 'Catalyst::Action::RenderView';
 requires 'Catalyst::Component::InstancePerContext';
 requires 'Catalyst::View::TT';
+requires 'Catalyst::Controller::REST';
 
 requires 'Template';
 requires 'Template::Provider::Encoding';
@@ -70,6 +71,8 @@ requires 'MooseX::Declare' => '0.32';
 requires 'MooseX::Types::Common';
 requires 'MooseX::Types::Path::Class';
 requires 'MooseX::Types';
+requires 'MooseX::Storage';
+requires 'JSON::XS';
 requires 'namespace::autoclean';
 
 requires 'Git::PurePerl' => '0.43';
