@@ -74,7 +74,11 @@ requires 'MooseX::Types::Common';
 requires 'MooseX::Types::Path::Class';
 requires 'MooseX::Types';
 requires 'MooseX::Storage';
+<<<<<<< HEAD
 requires 'JSON::Any';
+=======
+requires 'JSON::XS';
+>>>>>>> origin/json
 requires 'namespace::autoclean';
 
 requires 'Git::PurePerl' => '0.43';
