@@ -159,13 +159,10 @@ sub blame : Chained('base') Args(0) {
     blame    => $blame,
     head     => $repository->get_object($hb),
     filename => $filename,
-
-    # XXX Hack hack hack, see View::SyntaxHighlight
-    language => ($filename =~ /\.p[lm]$/i ? 'Perl' : ''),
     blob     => join("\n", map $_->{line}, @$blame),
   );
 
-  $c->forward('View::SyntaxHighlight')
+  $c->forward('Model::ContentMangler')
     unless $c->stash->{no_wrapper};
 }
 
@@ -203,12 +200,10 @@ sub blob : Chained('base') Args(0) {
     blob     => $blob->content,
     head     => $head,
     filename => $filename,
-    # XXX Hack hack hack, see View::SyntaxHighlight
-    language => ($filename =~ /\.p[lm]$/i ? 'Perl' : ''),
     action   => 'blob',
   );
 
-  $c->forward('View::SyntaxHighlight')
+  $c->forward('Model::ContentMangler')
     unless $c->stash->{no_wrapper};
 }
 
@@ -269,7 +264,7 @@ sub blobdiff : Chained('base') Args(0) {
     action    => 'blobdiff',
   );
 
-  $c->forward('View::SyntaxHighlight')
+  $c->forward('Model::ContentMangler')
     unless $c->stash->{no_wrapper};
 }
 
@@ -315,7 +310,7 @@ sub commitdiff : Chained('base') Args(0) {
     action    => 'commitdiff',
   );
 
-  $c->forward('View::SyntaxHighlight')
+  $c->forward('Model::ContentMangler')
     unless $c->stash->{no_wrapper};
 }
 
@@ -664,6 +659,7 @@ sub end : ActionClass('RenderView') {
     if ($c->stash->{Repository}) {
         $c->stash->{HEAD} = $c->stash->{Repository}->head_hash;
     }
+    $c->stash(syntax_css => [$c->model('ContentMangler')->css]);
 }
 
 sub error_404 : Action {
