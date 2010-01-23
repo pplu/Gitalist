@@ -659,7 +659,6 @@ sub end : ActionClass('RenderView') {
     if ($c->stash->{Repository}) {
         $c->stash->{HEAD} = $c->stash->{Repository}->head_hash;
     }
-    $c->stash(syntax_css => [$c->model('ContentMangler')->css]);
 }
 
 sub error_404 : Action {
