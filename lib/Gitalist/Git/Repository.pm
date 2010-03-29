@@ -128,7 +128,7 @@ class Gitalist::Git::Repository with Gitalist::Git::HasUtils {
             or return;
         my $line = $paths[0];
 
-        #'100644 blob 0fa3f3a66fb6a137f6ec2c19351ed4d807070ffa	panic.c'
+        #'100644 blob 0fa3f3a66fb6a137f6ec2c19351ed4d807070ffa  panic.c'
         $line =~ m/^([0-9]+) (.+) ($SHA1RE)\t/;
         return defined $type && $type ne $2
             ? ()
@@ -147,7 +147,7 @@ class Gitalist::Git::Repository with Gitalist::Git::HasUtils {
         if ($search) {
             $search->{type} = 'grep'
                 if $search->{type} eq 'commit';
-	    no warnings; # where's this warning coming from?
+            no warnings; # where's this warning coming from?
             @search_opts = (
                 # This seems a little fragile ...
                 qq[--$search->{type}=$search->{text}],
@@ -257,8 +257,8 @@ class Gitalist::Git::Repository with Gitalist::Git::HasUtils {
             $description = $self->path->file('description')->slurp;
             chomp $description;
         };
-	$description = "Unnamed repository, edit the .git/description file to set a description"
-	    if $description eq "Unnamed repository; edit this file 'description' to name the repository.";
+        $description = "Unnamed repository, edit the .git/description file to set a description"
+            if $description eq "Unnamed repository; edit this file 'description' to name the repository.";
         return $description;
     }
 

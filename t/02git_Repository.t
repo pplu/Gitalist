@@ -18,7 +18,7 @@ BEGIN {
       };
       *CORE::GLOBAL::getpwuid = sub {
         wantarray
-	  ? ("test", "x", "1000", "1000", "", "", "T\x{c3}\x{a9}st", "/home/test", "/bin/bash")
+          ? ("test", "x", "1000", "1000", "", "", "T\x{c3}\x{a9}st", "/home/test", "/bin/bash")
           : "test";
       };
     };
