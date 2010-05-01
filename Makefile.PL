@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+
 use FindBin;
 BEGIN { do "$FindBin::Bin/script/env" or die $@ }
 
@@ -90,6 +91,7 @@ requires 'File::Type::WebImages';
 requires 'File::Which';
 requires 'HTML::Entities';
 requires 'IPC::Run';
+requires 'JSON::XS';
 requires 'List::MoreUtils';
 requires 'Path::Class' => '0.17';
 requires 'Sub::Exporter';
@@ -113,13 +115,13 @@ if ($Module::Install::AUTHOR) {
 }
 
 if ($ENV{GITALIST_RELEASE_TESTING}) {
-    author_tests 't/author';
-    author_requires 'Test::NoTabs';
-    author_requires 'Test::Pod' => '1.14';
-    author_requires 'Test::Pod::Coverage' => '1.04';
-    author_requires 'Test::WWW::Mechanize::Catalyst' => '0.51';
-    author_requires 'HTML::TreeBuilder::XPath';
-    author_requires 'WWW::Mechanize::TreeBuilder';
+    author_tests('t/author');
+    author_requires('Test::NoTabs');
+    author_requires('Test::Pod' => '1.14');
+    author_requires('Test::Pod::Coverage' => '1.04');
+    author_requires('Test::WWW::Mechanize::Catalyst' => '0.51');
+    author_requires('HTML::TreeBuilder::XPath');
+    author_requires('WWW::Mechanize::TreeBuilder');
 }
 
 install_script glob('script/*.pl');
