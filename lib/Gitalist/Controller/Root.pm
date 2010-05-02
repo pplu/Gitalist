@@ -35,6 +35,7 @@ sub base : Chained('/root') PathPart('') CaptureArgs(0) {
     git_version => $git_version,
     version     => $Gitalist::VERSION,
 
+    # XXX Move these to a plugin!
     time_since => sub {
       return 'never' unless $_[0];
       return age_string(time - $_[0]->epoch);
@@ -58,23 +59,30 @@ sub base : Chained('/root') PathPart('') CaptureArgs(0) {
   );
 }
 
-sub search : Chained('base') Args(0) {}
-
-=head2 search_help
-
-Provides some help for the search form.
-
-=cut
-
-sub search_help : Chained('base') Args(0) {}
-
-sub end : ActionClass('RenderView') {}
+sub end : ActionClass('Serialize') {
+    my ($self, $c) = @_;
+    # Give repository views the current HEAD.
+    if ($c->stash->{Repository}) {
+        $c->stash->{HEAD} = $c->stash->{Repository}->head_hash;
+    }
+    if ($c->stash->{data} && blessed $c->stash->{data}) {
+        $c->stash->{rest} = $c->stash->{data}->pack;
+    }
+}
 
 sub error_404 : Action {
     my ($self, $c) = @_;
     $c->response->status(404);
     $c->response->body('Page not found');
 }
+
+__PACKAGE__->config(
+    default => 'text/html',
+    map => {
+        'text/html'        => [qw/ View Default /],
+        'application/json' => [qw/ JSON /],
+    }
+);
 
 __PACKAGE__->meta->make_immutable;
 
