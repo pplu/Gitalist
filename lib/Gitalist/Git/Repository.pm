@@ -76,10 +76,6 @@ class Gitalist::Git::Repository with Gitalist::Git::HasUtils {
                         is => 'ro',
                         lazy_build => 1 );
 
-    method BUILD {
-        $self->$_() for qw/last_change owner description /; # Ensure to build early.
-    }
-
     ## Public methods
 
     method head_hash (Str $head?) {
