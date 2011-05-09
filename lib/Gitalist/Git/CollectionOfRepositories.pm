@@ -38,11 +38,7 @@ role Gitalist::Git::CollectionOfRepositories {
     }
     requires qw/
         _build_repositories
-<<<<<<< HEAD
-		_get_repo_from_name
-=======
         _get_repo_from_name
->>>>>>> upstream/master
     /;
 
     around _build_repositories {
