@@ -9,6 +9,12 @@
 </tr>
 [% END %]
 
+[% IF results.size == 0 %]
+<div class="copy">
+No results found for <q>[% c.req.param('text') | html %]</q>.
+</div>
+[% ELSE %]
+
 <table class='listing'>
 <thead>[% PROCESS shortlog_table_headfoot type = 'head' %]</thead>
 <tbody>
@@ -16,7 +22,7 @@
  <tr [% "class='invert'" IF loop.count % 2 %]>
 	<td class='sha1' title='[% result.sha1 %]'>[% INCLUDE 'inc/chroma_hash.tt2' sha1 = result.sha1.substr(0, 7) %]</td>
 	<td class='time-since' title='[% result.authored_time %]'>[% time_since(result.authored_time) %]</td>
-	<td>[%
+	<td class='commit-message'>[%
      # XXX This is fragile at best.
      html_comment = result.comment | html;
      html_comment.replace(
@@ -33,3 +39,5 @@
 [% END %]
 </tbody>
 </table>
+
+[% END %]

@@ -35,7 +35,7 @@ class Gitalist::Git::CollectionOfRepositories::FromDirectoryRecursive
 
     method _get_repo_name (NonEmptySimpleStr $name) {
         # strip off the repo_dir part from a path
-		return Path::Class::Dir->new($name)->relative($self->repo_dir)->stringify;
+        return Path::Class::Dir->new($name)->relative($self->repo_dir)->stringify;
     }
 
     ## Builders

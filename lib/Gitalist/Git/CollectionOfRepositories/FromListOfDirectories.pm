@@ -28,8 +28,8 @@ class Gitalist::Git::CollectionOfRepositories::FromListOfDirectories with Gitali
     }
 
     method _get_repo_from_name (NonEmptySimpleStr $name) {
-		return Gitalist::Git::Repository->new($self->_get_path_for_repository_name($name));
-	}
+        return Gitalist::Git::Repository->new($self->_get_path_for_repository_name($name));
+    }
 
     ## Builders
     method _build_repositories {
