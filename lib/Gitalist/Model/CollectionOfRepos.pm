@@ -88,7 +88,9 @@ sub build_per_context_instance {
 
     my %args = (export_ok => $self->export_ok || '');
     my $class;
-    if($self->whitelist && -f $self->whitelist) {
+    if($self->whitelist) {
+        $app->log->error("Whitelist file doesn't exist " . $self->whitelist) if (not -f $self->whitelist);
+
         $class = 'Gitalist::Git::CollectionOfRepositories::FromDirectory::WhiteList';
         $args{repo_dir}  = $self->repo_dir;
         $args{whitelist} = $self->whitelist;
