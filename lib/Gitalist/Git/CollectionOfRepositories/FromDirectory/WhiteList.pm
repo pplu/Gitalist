@@ -5,6 +5,8 @@ class Gitalist::Git::CollectionOfRepositories::FromDirectory::WhiteList
     use MooseX::Types::Common::String qw/NonEmptySimpleStr/;
     use MooseX::Types::Path::Class qw/File Dir/;
 
+    use List::Util 'first';
+
     has whitelist => (
         isa      => File,
         is       => 'ro',
@@ -14,12 +16,23 @@ class Gitalist::Git::CollectionOfRepositories::FromDirectory::WhiteList
 
     method _build_repositories {
         return [
-            map  Gitalist::Git::Repository->new($_),
+            map  Gitalist::Git::Repository->new($_, $self->_get_repo_name("$_")),
             grep -d $_,
             map  $self->repo_dir->subdir($_),
             map  [split]->[0], $self->whitelist->slurp(chomp => 1)
         ];
     }
+
+     method _get_repo_from_name (NonEmptySimpleStr $name) {
+       my $repo = first { $_->name eq $name } @{ $self->repositories };
+       #  or return;
+       return $repo;
+     }
+
+     method _get_repo_name (NonEmptySimpleStr $name) {
+         # strip off the repo_dir part from a path
+         return Path::Class::Dir->new($name)->relative($self->repo_dir)->stringify;
+     }
 }
 
 __END__
