@@ -28,14 +28,20 @@ role Gitalist::Git::CollectionOfRepositories {
     # Determine whether a given directory is a git repo.
     # http://www.kernel.org/pub/software/scm/git/docs/gitrepository-layout.html
     method _is_git_repo ($dir) {
+        return 0 unless ($dir->is_dir);
         my $has_head   = -f $dir->file('HEAD') || -f $dir->file('.git', 'HEAD');
-        my $eok_file   = $self->export_ok
-             or return $has_head;
-        my $is_visible = $eok_file
-             && (-f $dir->file($eok_file) || -f $dir->file('.git', $eok_file));
-
-        return $has_head && $is_visible;
+        return $has_head;
     }
+
+    method _is_visible ($dir) {
+        return 0 unless ($dir->is_dir);
+        # if export_ok is not set, the repo is visible.
+        my $eok_file   = $self->export_ok 
+             or return 1;
+        my $is_exportable = (-f $dir->file($eok_file) || -f $dir->file('.git', $eok_file));
+        return $is_exportable;        
+    }
+
     requires qw/
         _build_repositories
         _get_repo_from_name

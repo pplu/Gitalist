@@ -22,9 +22,9 @@ class Gitalist::Git::CollectionOfRepositories::FromDirectoryRecursive
     }
 
     method _find_repos(Dir $dir) {
-      return map {
-        $self->_is_git_repo($_) ? $_ : $self->_find_repos($_)
-      } grep $_->is_dir, $dir->children;
+      return grep { $self->_is_visible($_); }  
+             map  { $self->_is_git_repo($_) ? $_ : $self->_find_repos($_) } 
+             grep $_->is_dir, $dir->children;
     }
 
     method _get_repo_from_name (NonEmptySimpleStr $name) {

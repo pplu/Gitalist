@@ -31,15 +31,18 @@ class Gitalist::Git::CollectionOfRepositories::FromDirectory
 
     ## Builders
     method _build_repositories {
-        my $dh = $self->repo_dir->open || die "Could not open repo_dir";
+        my $dh = $self->repo_dir;
         my @ret;
-        while (my $dir_entry = $dh->read) {
-            # try to get a repository for each entry in repo_dir
+        while (my $dir_entry = $dh->next) {
+             # try to get a repository for each entry in repo_dir
+             next unless ($self->_is_git_repo($dir_entry->absolute));
+             next unless ($self->_is_visible($dir_entry->absolute));
+
              eval {
-                 my $p = $self->get_repository($dir_entry);
+                 my $p = Gitalist::Git::Repository->new($dir_entry->absolute);
                  push @ret, $p;
-            };
-         }
+             };
+        }
         return \@ret;
     }
 }                               # end class

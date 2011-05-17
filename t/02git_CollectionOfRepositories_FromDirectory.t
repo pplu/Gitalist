@@ -69,5 +69,5 @@ my $repo_eok = Gitalist::Git::CollectionOfRepositories::FromDirectory->new(
 
 my @eok_repos = @{$repo_eok->repositories};
 
-is(1, @eok_repos, "Found the 1 export-ok repo");
-is('repo1', $eok_repos[0]->name, "Found repo1 export-ok repo");
+is(@eok_repos, 1, "Found the 1 export-ok repo");
+is($eok_repos[0]->name, 'repo1', "Found repo1 export-ok repo");
